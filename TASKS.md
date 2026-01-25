@@ -50,15 +50,15 @@ This document serves as the central roadmap for the project. Agents should updat
     - [x] Implement "Equip" logic.
 
 ## Phase 5: Content & Curriculum
-- [ ] **Lesson Data Structure**
-    - [ ] Define JSON structure for Lessons (ID, Title, Text/Phases, Rewards).
-- [ ] **Content Creation**
-    - [ ] Implement Phase 1: Home Row.
-    - [ ] Implement Phase 2: Top Row & Shift.
-    - [ ] Implement Phase 3: Bottom Row & Symbols.
-- [ ] **Audio**
-    - [ ] Implement Sound Manager (BGM, SFX).
-    - [ ] Add typing sounds and success queues.
+- [x] **Lesson Data Structure**
+    - [x] Define JSON structure for Lessons (ID, Title, Text/Phases, Rewards).
+- [x] **Content Creation**
+    - [x] Implement Phase 1: Home Row.
+    - [x] Implement Phase 2: Top Row & Shift.
+    - [x] Implement Phase 3: Bottom Row & Symbols.
+- [x] **Audio**
+    - [x] Implement Sound Manager (BGM, SFX).
+    - [x] Add typing sounds and success queues.
 
 ## Phase 6: Polish & Deployment
 - [ ] **Optimization**

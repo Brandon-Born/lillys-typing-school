@@ -1,15 +1,40 @@
 import React from 'react'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { useGameStore } from '../store/useGameStore'
 import { useTypingEngine } from '../hooks/useTypingEngine'
+import { useAudioManager } from '../hooks/useAudioManager'
 import { TypingDisplay } from '../components/TypingDisplay'
 import { SceneContainer } from '../components/3d/SceneContainer'
 
-const TEST_SENTENCE = "fashion is fun"
+import { lessons } from '../data/lessons'
 
-export const Game = () => {
+export const Game = ({ params }) => {
+    const [, setLocation] = useLocation()
     const { addCoins } = useGameStore()
-    const { input, mistakes, wpm, isCompleted, shake, reset } = useTypingEngine(TEST_SENTENCE)
+
+    // Find lesson or fallback to first one/debug
+    const lesson = lessons.find(l => l.id === params.lessonId)
+    const targetText = lesson ? lesson.content : "Error: Lesson not found"
+    const rewardCoins = lesson ? lesson.rewards.coins : 5
+
+    const { input, mistakes, wpm, isCompleted, shake, reset } = useTypingEngine(targetText)
+    const { playSuccessSound } = useAudioManager()
+
+    React.useEffect(() => {
+        if (isCompleted) {
+            playSuccessSound()
+        }
+    }, [isCompleted, playSuccessSound])
+
+    const handleComplete = () => {
+        addCoins(rewardCoins)
+        setLocation('/agency')
+    }
+
+    const handleReplay = () => {
+        addCoins(Math.floor(rewardCoins / 2))
+        reset()
+    }
 
     return (
         <div className="min-h-screen bg-brand-light flex flex-col items-center justify-center p-4 space-y-4">
@@ -28,9 +53,9 @@ export const Game = () => {
 
             {/* Typing Area */}
             <div className="bg-white p-6 md:p-12 rounded-xl shadow-lg border-2 border-brand-pink text-center space-y-8 max-w-2xl w-full z-10 relative">
-                <h2 className="text-2xl font-display text-brand-deep">Runway Rehearsal</h2>
+                <h2 className="text-2xl font-display text-brand-deep">{lesson?.title || "Runway Rehearsal"}</h2>
 
-                <TypingDisplay targetText={TEST_SENTENCE} input={input} shake={shake} />
+                <TypingDisplay targetText={targetText} input={input} shake={shake} />
 
                 <div className="grid grid-cols-3 gap-4 text-center font-mono text-sm text-gray-500 mt-8">
                     <div>
@@ -50,19 +75,17 @@ export const Game = () => {
                 {isCompleted && (
                     <div className="space-x-4">
                         <button
-                            onClick={() => {
-                                reset()
-                                addCoins(5)
-                            }}
+                            onClick={handleReplay}
                             className="mt-6 px-6 py-3 bg-brand-pink text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
                         >
-                            Replay Level (+5 FC)
+                            Replay Level (+{Math.floor(rewardCoins / 2)} FC)
                         </button>
-                        <Link href="/agency">
-                            <button className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md">
-                                Complete Gig
-                            </button>
-                        </Link>
+                        <button
+                            onClick={handleComplete}
+                            className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
+                        >
+                            Complete Gig (+{rewardCoins} FC)
+                        </button>
                     </div>
                 )}
             </div>

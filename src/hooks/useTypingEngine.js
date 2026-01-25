@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useAudioManager } from './useAudioManager'
 
 export const useTypingEngine = (targetText) => {
     const [input, setInput] = useState('')
@@ -8,6 +9,8 @@ export const useTypingEngine = (targetText) => {
     const [wpm, setWpm] = useState(0)
     const [isCompleted, setIsCompleted] = useState(false)
     const [shake, setShake] = useState(false) // Visual feedback trigger
+
+    const { playTypingSound, playErrorSound } = useAudioManager() || {} // Optional chaining for safety if context is missing in tests
 
     const reset = useCallback(() => {
         setInput('')
@@ -56,13 +59,18 @@ export const useTypingEngine = (targetText) => {
                 const finalWpm = Math.round(words / timeInMinutes)
                 setWpm(finalWpm)
             }
+            // Trigger sound
+            playTypingSound?.()
         } else {
             // Mistake
             setMistakes((prev) => prev + 1)
             setShake(true)
+            setMistakes((prev) => prev + 1)
+            setShake(true)
             setTimeout(() => setShake(false), 300) // Reset shake after animation
+            playErrorSound?.()
         }
-    }, [input, targetText, startTime, isCompleted])
+    }, [input, targetText, startTime, isCompleted, playTypingSound, playErrorSound])
 
     // Attach global listener
     useEffect(() => {
