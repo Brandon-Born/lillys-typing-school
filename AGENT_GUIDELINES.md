@@ -6,6 +6,7 @@ Before beginning any work, you MUST review the following core documents to under
 ## 📚 Core Documentation
 1.  **[Game Design Document](./game_design_document.md)**: Contains the Vision, Style Guide, Architecture, and Mechanics. ALways align your implementation with the "Style Guide" and "Target Audience" sections here.
 2.  **[Project Tasks](./TASKS.md)**: The central roadmap. Check this file to see what to pick up next and mark items as complete only when they meet the criteria below.
+3.  **[Testing Protocols](./TESTING_PROTOCOLS.md)**: MANDATORY reading for adding assets. Follow the "Rigorous Testing Procedure" for every new item.
 
 ---
 

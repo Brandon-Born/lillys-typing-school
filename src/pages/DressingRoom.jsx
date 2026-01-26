@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'wouter'
 import { useGameStore } from '../store/useGameStore'
-import { SHOP_ITEMS } from '../data/items'
+import { SHOP_ITEMS, ALL_ITEMS } from '../data/items'
+import { SceneContainer } from '../components/3d/SceneContainer'
+import { DressingRoomScene } from '../components/3d/DressingRoomScene'
 
 export const DressingRoom = () => {
     const { unlockedItems, currentOutfit, setOutfitItem } = useGameStore()
@@ -9,14 +11,31 @@ export const DressingRoom = () => {
 
     const categories = ['top', 'bottom', 'shoes', 'hair']
 
+    const categoryLabels = {
+        top: 'Tops',
+        bottom: 'Bottoms',
+        shoes: 'Shoes',
+        hair: 'Hairstyles'
+    }
+
     // Filter items owned by the user
-    const ownedItems = SHOP_ITEMS.filter(item => unlockedItems.includes(item.id))
+    const ownedItems = ALL_ITEMS.filter(item => unlockedItems.includes(item.id))
 
     return (
         <div className="min-h-screen bg-brand-light p-8">
             <Link href="/agency">
                 <button className="text-brand-deep font-bold hover:underline mb-8">← Back to Agency</button>
             </Link>
+
+            <div className="mb-8">
+                <SceneContainer
+                    cameraPosition={[0, 1.5, 4.5]}
+                    target={[0, 0.9, 0]}
+                    enableControls={true}
+                >
+                    <DressingRoomScene />
+                </SceneContainer>
+            </div>
 
             <header className="flex justify-between items-center mb-8">
                 <h1 className="text-4xl font-display text-brand-deep">Dressing Room</h1>
@@ -39,11 +58,11 @@ export const DressingRoom = () => {
                         key={cat}
                         onClick={() => setActiveTab(cat)}
                         className={`px-4 py-2 font-display text-lg rounded-t-lg transition-colors ${activeTab === cat
-                                ? 'bg-brand-pink text-white shadow-md'
-                                : 'text-gray-500 hover:text-brand-pink'
+                            ? 'bg-brand-pink text-white shadow-md'
+                            : 'text-gray-500 hover:text-brand-pink'
                             }`}
                     >
-                        {cat.charAt(0).toUpperCase() + cat.slice(1)}s
+                        {categoryLabels[cat]}
                     </button>
                 ))}
             </div>
@@ -69,8 +88,8 @@ export const DressingRoom = () => {
                                 onClick={() => setOutfitItem(item.category, item.id)}
                                 disabled={isEquipped}
                                 className={`mt-4 w-full py-2 font-bold rounded-lg transition ${isEquipped
-                                        ? 'bg-brand-deep text-white cursor-default'
-                                        : 'bg-white border-2 border-brand-purple text-brand-purple hover:bg-brand-purple hover:text-white'
+                                    ? 'bg-brand-deep text-white cursor-default'
+                                    : 'bg-white border-2 border-brand-purple text-brand-purple hover:bg-brand-purple hover:text-white'
                                     }`}
                             >
                                 {isEquipped ? 'Equipped' : 'Wear'}

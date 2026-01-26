@@ -60,10 +60,30 @@ This document serves as the central roadmap for the project. Agents should updat
     - [x] Implement Sound Manager (BGM, SFX).
     - [x] Add typing sounds and success queues.
 
-## Phase 6: Polish & Deployment
-- [ ] **Optimization**
-    - [ ] Optimize 3D assets.
-    - [ ] Implement suspend/loaders for assets.
+## Phase 6: Asset Remediation & Completion (CRITICAL)
+- [x] **Refactor Avatar System**
+    - [x] Update `Avatar.jsx` to support separate meshes/textures for Top, Bottom, Shoes, Hair.
+    - [x] Ensure `useGameStore` props are correctly passed to visual components.
+    - [x] **Switch to BoxGeometry** to fix texture wrapping and clipping issues.
+- [ ] **Missing Store Assets (Must pass Testing Protocols)**
+    - [x] **Tops** (Remediated & Verified)
+        - [x] `sparkle-top` (Clean front texture w/ skin match)
+        - [x] `denim-jacket` (Clean front texture w/ skin match)
+        - [x] `basic-tee` (Starting item - Visible & Mapped)
+    - [ ] **Bottoms**
+        - [ ] `neon-skirt`
+        - [ ] `leather-pants`
+        - [ ] `jeans` (Starting item)
+    - [ ] **Shoes**
+        - [ ] `boots`
+        - [ ] `heels`
+        - [ ] `sneakers` (Starting item)
+    - [ ] **Hair**
+        - [ ] `blue-hair`
+        - [ ] `default-hair` (Starting item)
+- [ ] **Asset Verification**
+    - [ ] Audit `face.png` (Ensure it meets quality standards).
+    - [ ] Audit `fabric.png` (Is this used? If generic, replace with specific item textures).
 - [ ] **PWA / Offline**
     - [ ] Configure Vite PWA plugin (optional but recommended for Chromebooks).
 - [ ] **Final Testing**

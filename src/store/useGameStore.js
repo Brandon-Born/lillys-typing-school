@@ -28,6 +28,10 @@ export const useGameStore = create(
                 return { unlockedItems: [...state.unlockedItems, itemId] }
             }),
 
+            unlockAllItems: (itemIds) => set((state) => ({
+                unlockedItems: [...new Set([...state.unlockedItems, ...itemIds])]
+            })),
+
             setOutfitItem: (category, itemId) => set((state) => ({
                 currentOutfit: { ...state.currentOutfit, [category]: itemId }
             })),
