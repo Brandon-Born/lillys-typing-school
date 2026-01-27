@@ -66,3 +66,11 @@ We regenerated the Top assets with strict "Front View Only" prompts.
 
 ![Leather Pants](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/leather_verification_1769482316158.png)
 *Leather Pants: Textured Box Legs*
+
+### Hair Clipping Fix
+| Item | Result | Notes |
+| :--- | :--- | :--- |
+| **Face Visibility** | **PASS** | Hair block moved back (Z=-0.05). Eyes and mouth are now fully visible. |
+
+![Face Visibility](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/avatar_face_verification_1769482511289.png)
+*Face texture visible (Hair no longer clipping).*

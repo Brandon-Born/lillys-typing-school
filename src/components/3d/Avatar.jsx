@@ -121,7 +121,7 @@ export const Avatar = () => {
                     />
                 </mesh>
                 {/* Hair - Simple Wig Block */}
-                <mesh position={[0, 0.1, 0]} castShadow>
+                <mesh position={[0, 0.1, -0.05]} castShadow>
                     <boxGeometry args={[0.65, 0.5, 0.65]} />
                     <meshStandardMaterial color={hairItem.color || '#552200'} />
                 </mesh>
