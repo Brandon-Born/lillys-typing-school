@@ -36,42 +36,45 @@ export const Avatar = () => {
     const [topTexture, bottomTexture] = useTexture([topTextureUrl, bottomTextureUrl])
 
     // Configure Textures
-    // We strictly map the texture to the front using Decal or Box Mapping
-    // For now, simpler approach: Box Geometry with texture on Front Face only?
-    // Actually, using Decal for the "Clothing Item" is the safest way to avoid wrapping distortion.
-    // The "Fabric" base can be the color.
+    // Top uses Box Mapping (Front Face only)
+    // Bottom uses Seamless Texture (All Faces)
 
-    // HOWEVER, the user wants the "Denim Jacket" which is a full garment. 
-    // The "Box Mapping" approach:
-    // BoxGeometry has 6 faces. Material index 4 is usually Front (or 0/1 depending on ThreeJS version and UVs).
-    // Let's use a standard Box and apply material array.
+    // Set repeat for seamless texturing on Skirt/Pants
+    bottomTexture.wrapS = bottomTexture.wrapT = THREE.RepeatWrapping
+    bottomTexture.repeat.set(1, 1)
 
-    // Better for this style:
-    // Base Torso Mesh (Color of the item)
-    // + Decal for the graphic/texture on the front.
-
-    // BUT the Denim Jacket texture was full body.
-    // Let's try the BoxGeometry with the texture applied to all sides but with `repeat` set to avoid stretching?
-    // No, wrapping a 2D front-view image around a Box also looks weird on sides.
-
-    // Solution:
-    // 1. Torso is a Box.
-    // 2. Texture is applied to the FRONT face only (Index 4 in standard Box UVs?).
-    // 3. Other faces get the dominant color.
-
+    // Materials Setup for TOP
     const materials = useMemo(() => {
         const matColor = new THREE.MeshStandardMaterial({ color: topItem.color || '#ffffff' })
         const matTexture = new THREE.MeshStandardMaterial({
             map: topTexture,
             color: 'white',
-            transparent: true // In case we fix transparency later
+            transparent: true
         })
-
-        // BoxGeometry materials order: right, left, top, bottom, front, back
-        // We want the texture on FRONT (index 4) and maybe BACK (index 5) if we had a back texture.
-        // For now, Front = texture, others = color.
         return [matColor, matColor, matColor, matColor, matTexture, matColor]
     }, [topItem.color, topTexture])
+
+    // Helper: Determine if bottom is skirt or pants
+    const isSkirt = bottomItem.id?.includes('skirt')
+    const skinColor = "#ffccaa"
+
+    // Materials Setup for BOTTOMS
+    const legMaterial = useMemo(() => {
+        if (isSkirt) {
+            return new THREE.MeshStandardMaterial({ color: skinColor })
+        }
+        return new THREE.MeshStandardMaterial({
+            map: bottomTexture,
+            color: 'white'
+        })
+    }, [isSkirt, skinColor, bottomTexture])
+
+    const skirtMaterial = useMemo(() => {
+        return new THREE.MeshStandardMaterial({
+            map: bottomTexture,
+            color: 'white'
+        })
+    }, [bottomTexture])
 
     const faceMap = useMemo(() => {
         const face = rawFace.clone()
@@ -98,12 +101,7 @@ export const Avatar = () => {
         }
     })
 
-    // Helper: Determine if bottom is skirt or pants
-    // For now, only 'neon-skirt' is explicitly a skirt. We can add a property to items later.
-    const isSkirt = bottomItem.id?.includes('skirt')
 
-    // Skin Color
-    const skinColor = "#ffccaa"
 
     return (
         <group ref={groupRef} dispose={null}>
@@ -134,11 +132,11 @@ export const Avatar = () => {
                 <boxGeometry args={[0.6, 0.8, 0.4]} /> {/* W, H, D */}
             </mesh>
 
+
             {/* SKIRT (Conditional) */}
             {isSkirt && (
-                <mesh position={[0, 1.05, 0]} castShadow> {/* 0.35 + 0.7 */}
+                <mesh position={[0, 1.05, 0]} castShadow material={skirtMaterial}> {/* 0.35 + 0.7 */}
                     <coneGeometry args={[0.5, 0.5, 32]} />
-                    <meshStandardMaterial color={bottomItem.color || '#ff00ff'} />
                 </mesh>
             )}
 
@@ -158,10 +156,8 @@ export const Avatar = () => {
 
             {/* LEGS / PANTS */}
             <group position={[-0.2, 0.9, 0]} ref={leftLegRef}> {/* 0.2 + 0.7 */}
-                <mesh position={[0, -0.4, 0]}>
-                    <capsuleGeometry args={[0.1, 0.8, 4, 8]} />
-                    {/* If skirt, legs are skin (tights?). If pants, legs are pants color. */}
-                    <meshStandardMaterial color={isSkirt ? skinColor : (bottomItem.color || '#3366cc')} />
+                <mesh position={[0, -0.4, 0]} material={legMaterial}>
+                    <boxGeometry args={[0.2, 0.8, 0.2]} />
                 </mesh>
                 {/* Shoe */}
                 <mesh position={[0, -0.85, 0.1]}>
@@ -170,9 +166,8 @@ export const Avatar = () => {
                 </mesh>
             </group>
             <group position={[0.2, 0.9, 0]} ref={rightLegRef}> {/* 0.2 + 0.7 */}
-                <mesh position={[0, -0.4, 0]}>
-                    <capsuleGeometry args={[0.1, 0.8, 4, 8]} />
-                    <meshStandardMaterial color={isSkirt ? skinColor : (bottomItem.color || '#3366cc')} />
+                <mesh position={[0, -0.4, 0]} material={legMaterial}>
+                    <boxGeometry args={[0.2, 0.8, 0.2]} />
                 </mesh>
                 {/* Shoe */}
                 <mesh position={[0, -0.85, 0.1]}>

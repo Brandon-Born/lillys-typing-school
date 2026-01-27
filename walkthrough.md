@@ -50,5 +50,19 @@ We regenerated the Top assets with strict "Front View Only" prompts.
 *Full avatar visible, centered in the view.*
 
 ### Debug Tools
-![Mall Debug Button](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/mall_after_unlock_all_1769468152110.png)
-*Mall items unlocked via Debug button.*
+
+### Bottoms Remediation
+| Item | Result | Notes |
+| :--- | :--- | :--- |
+| **Blue Jeans** | **PASS** | Box legs with seamless denim texture. Clean look. |
+| **Neon Skirt** | **PASS** | Cone skirt with seamless neon texture + Skin-colored box legs. |
+| **Leather Pants** | **PASS** | Box legs with seamless leather texture. |
+
+![Blue Jeans](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/jeans_verification_1769481279936.png)
+*Blue Jeans: Textured Box Legs*
+
+![Neon Skirt](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/skirt_verification_1769482263322.png)
+*Neon Skirt: Textured Cone + Skin Legs*
+
+![Leather Pants](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/leather_verification_1769482316158.png)
+*Leather Pants: Textured Box Legs*

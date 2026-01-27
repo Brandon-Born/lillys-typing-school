@@ -70,10 +70,10 @@ This document serves as the central roadmap for the project. Agents should updat
         - [x] `sparkle-top` (Clean front texture w/ skin match)
         - [x] `denim-jacket` (Clean front texture w/ skin match)
         - [x] `basic-tee` (Starting item - Visible & Mapped)
-    - [ ] **Bottoms**
-        - [ ] `neon-skirt`
-        - [ ] `leather-pants`
-        - [ ] `jeans` (Starting item)
+    - [x] **Bottoms** (Remediated & Verified)
+        - [x] `neon-skirt` (Seamless neon fabric w/ skin legs)
+        - [x] `leather-pants` (Seamless leather fabric)
+        - [x] `jeans` (Seamless denim fabric)
     - [ ] **Shoes**
         - [ ] `boots`
         - [ ] `heels`

@@ -5,9 +5,9 @@ export const ALL_ITEMS = [
     { id: 'denim-jacket', name: 'Denim Jacket', category: 'top', price: 100, color: '#3366cc', texture: '/assets/denim-jacket.png?v=1', description: 'Cool and casual.' },
 
     // Bottoms
-    { id: 'jeans', name: 'Blue Jeans', category: 'bottom', price: 0, color: '#3366cc', description: 'Comfortable denim.' },
-    { id: 'neon-skirt', name: 'Neon Skirt', category: 'bottom', price: 60, color: '#ccff00', description: 'Hard to miss!' },
-    { id: 'leather-pants', name: 'Leather Pants', category: 'bottom', price: 120, color: '#222222', description: 'Rockstar vibes.' },
+    { id: 'jeans', name: 'Blue Jeans', category: 'bottom', price: 0, color: '#3366cc', texture: '/assets/jeans-fabric.png', description: 'Comfortable denim.' },
+    { id: 'neon-skirt', name: 'Neon Skirt', category: 'bottom', price: 60, color: '#ccff00', texture: '/assets/neon-fabric.png', description: 'Hard to miss!' },
+    { id: 'leather-pants', name: 'Leather Pants', category: 'bottom', price: 120, color: '#222222', texture: '/assets/leather-fabric.png', description: 'Rockstar vibes.' },
 
     // Shoes
     { id: 'sneakers', name: 'White Sneakers', category: 'shoes', price: 0, color: '#eeeeee', description: 'Good for running.' },
