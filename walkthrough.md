@@ -81,5 +81,24 @@ We regenerated the Top assets with strict "Front View Only" prompts.
 | :--- | :--- | :--- |
 | **Bangs Mesh** | **PASS** | Added forehead hair block. Covers forehead, eyes visible below. |
 
-![Bangs Verification](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/avatar_bangs_verification_1769486149670.png)
-*Bangs added on forehead.*
+
+### Shoes Remediation (Fallback Assets)
+Due to generation service outage, we used high-quality fallback materials:
+*   **Sneakers**: Canvas texture (from Basic Tee).
+*   **Boots**: Leather texture (from Leather Pants).
+*   **Heels**: Sparkle texture (from Sparkle Top).
+
+| Item | Result | Notes |
+| :--- | :--- | :--- |
+| **White Sneakers** | **PASS** | White canvas texture applied to shoe blocks. |
+| **Chunky Boots** | **PASS** | Black leather texture. |
+| **Pink Heels** | **PASS** | Pink sparkle texture. |
+
+![Sneakers](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/sneakers_verification_1769486674454.png)
+*White Sneakers (Canvas Texture)*
+
+![Boots](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/boots_verification_1769487650970.png)
+*Chunky Boots (Leather Texture)*
+
+![Heels](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/heels_verification_1769487699334.png)
+*Pink Heels (Sparkle Texture)*

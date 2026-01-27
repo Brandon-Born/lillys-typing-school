@@ -33,7 +33,9 @@ export const Avatar = () => {
     const topTextureUrl = topItem.texture || fabricUrl
     const bottomTextureUrl = bottomItem.texture || fabricUrl
 
-    const [topTexture, bottomTexture] = useTexture([topTextureUrl, bottomTextureUrl])
+    const shoeTextureUrl = shoeItem.texture || fabricUrl
+
+    const [topTexture, bottomTexture, shoeTexture] = useTexture([topTextureUrl, bottomTextureUrl, shoeTextureUrl])
 
     // Configure Textures
     // Top uses Box Mapping (Front Face only)
@@ -75,6 +77,14 @@ export const Avatar = () => {
             color: 'white'
         })
     }, [bottomTexture])
+
+    // Materials Setup for SHOES
+    const shoeMaterial = useMemo(() => {
+        return new THREE.MeshStandardMaterial({
+            map: shoeTexture,
+            color: 'white' // Tint with white
+        })
+    }, [shoeTexture])
 
     const faceMap = useMemo(() => {
         const face = rawFace.clone()
@@ -160,14 +170,14 @@ export const Avatar = () => {
             </group>
 
             {/* LEGS / PANTS */}
+            {/* LEGS / PANTS */}
             <group position={[-0.2, 0.9, 0]} ref={leftLegRef}> {/* 0.2 + 0.7 */}
                 <mesh position={[0, -0.4, 0]} material={legMaterial}>
                     <boxGeometry args={[0.2, 0.8, 0.2]} />
                 </mesh>
                 {/* Shoe */}
-                <mesh position={[0, -0.85, 0.1]}>
+                <mesh position={[0, -0.85, 0.1]} material={shoeMaterial}>
                     <boxGeometry args={[0.15, 0.1, 0.3]} />
-                    <meshStandardMaterial color={shoeItem.color || '#000000'} />
                 </mesh>
             </group>
             <group position={[0.2, 0.9, 0]} ref={rightLegRef}> {/* 0.2 + 0.7 */}
@@ -175,9 +185,8 @@ export const Avatar = () => {
                     <boxGeometry args={[0.2, 0.8, 0.2]} />
                 </mesh>
                 {/* Shoe */}
-                <mesh position={[0, -0.85, 0.1]}>
+                <mesh position={[0, -0.85, 0.1]} material={shoeMaterial}>
                     <boxGeometry args={[0.15, 0.1, 0.3]} />
-                    <meshStandardMaterial color={shoeItem.color || '#000000'} />
                 </mesh>
             </group>
         </group>

@@ -74,13 +74,13 @@ This document serves as the central roadmap for the project. Agents should updat
         - [x] `neon-skirt` (Seamless neon fabric w/ skin legs)
         - [x] `leather-pants` (Seamless leather fabric)
         - [x] `jeans` (Seamless denim fabric)
-    - [ ] **Shoes**
-        - [ ] `boots`
-        - [ ] `heels`
-        - [ ] `sneakers` (Starting item)
-    - [ ] **Hair**
-        - [ ] `blue-hair`
-        - [ ] `default-hair` (Starting item)
+    - [x] **Shoes** (Verified)
+        - [x] `boots` (Black Leather)
+        - [x] `heels` (Pink Sparkle)
+        - [x] `sneakers` (White Canvas)
+    - [x] **Hair**
+        - [x] `blue-hair` (Fixed Clipping & Added Bangs)
+        - [x] `default-hair` (Standard Bun)
 - [ ] **Asset Verification**
     - [ ] Audit `face.png` (Ensure it meets quality standards).
     - [ ] Audit `fabric.png` (Is this used? If generic, replace with specific item textures).

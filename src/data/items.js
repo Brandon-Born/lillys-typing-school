@@ -10,9 +10,9 @@ export const ALL_ITEMS = [
     { id: 'leather-pants', name: 'Leather Pants', category: 'bottom', price: 120, color: '#222222', texture: '/assets/leather-fabric.png', description: 'Rockstar vibes.' },
 
     // Shoes
-    { id: 'sneakers', name: 'White Sneakers', category: 'shoes', price: 0, color: '#eeeeee', description: 'Good for running.' },
-    { id: 'boots', name: 'Chunky Boots', category: 'shoes', price: 80, color: '#000000', description: 'Stomp around.' },
-    { id: 'heels', name: 'Pink Heels', category: 'shoes', price: 90, color: '#ff66b2', description: 'Fancy footwear.' },
+    { id: 'sneakers', name: 'White Sneakers', category: 'shoes', price: 0, color: '#eeeeee', texture: '/assets/sneakers.png', description: 'Good for running.' },
+    { id: 'boots', name: 'Chunky Boots', category: 'shoes', price: 80, color: '#000000', texture: '/assets/leather-fabric.png', description: 'Stomp around.' },
+    { id: 'heels', name: 'Pink Heels', category: 'shoes', price: 90, color: '#ff66b2', texture: '/assets/heels.png', description: 'Fancy footwear.' },
 
     // Hair
     { id: 'default-hair', name: 'Messy Bun', category: 'hair', price: 0, color: '#884400', description: 'Simple and practical.' },
