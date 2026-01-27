@@ -72,5 +72,14 @@ We regenerated the Top assets with strict "Front View Only" prompts.
 | :--- | :--- | :--- |
 | **Face Visibility** | **PASS** | Hair block moved back (Z=-0.05). Eyes and mouth are now fully visible. |
 
+
 ![Face Visibility](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/avatar_face_verification_1769482511289.png)
 *Face texture visible (Hair no longer clipping).*
+
+### Bangs Addition
+| Item | Result | Notes |
+| :--- | :--- | :--- |
+| **Bangs Mesh** | **PASS** | Added forehead hair block. Covers forehead, eyes visible below. |
+
+![Bangs Verification](/Users/bborn/.gemini/antigravity/brain/3992ed55-0e51-495a-aafb-9bf771bed1b9/avatar_bangs_verification_1769486149670.png)
+*Bangs added on forehead.*

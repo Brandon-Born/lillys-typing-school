@@ -125,6 +125,11 @@ export const Avatar = () => {
                     <boxGeometry args={[0.65, 0.5, 0.65]} />
                     <meshStandardMaterial color={hairItem.color || '#552200'} />
                 </mesh>
+                {/* Bangs - Forehead Coverage */}
+                <mesh position={[0, 0.25, 0.3]} castShadow>
+                    <boxGeometry args={[0.65, 0.2, 0.1]} />
+                    <meshStandardMaterial color={hairItem.color || '#552200'} />
+                </mesh>
             </group>
 
             {/* TORSO / TOP - Boxy Style */}
