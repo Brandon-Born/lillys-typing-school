@@ -171,21 +171,21 @@ export const Avatar = () => {
 
             {/* LEGS / PANTS */}
             {/* LEGS / PANTS */}
-            <group position={[-0.2, 0.9, 0]} ref={leftLegRef}> {/* 0.2 + 0.7 */}
-                <mesh position={[0, -0.4, 0]} material={legMaterial}>
-                    <boxGeometry args={[0.2, 0.8, 0.2]} />
+            <group position={[-0.2, 1.05, 0]} ref={leftLegRef}> {/* Hip at 1.05 to match Torso Bottom */}
+                <mesh position={[0, -0.475, 0]} material={legMaterial}>
+                    <boxGeometry args={[0.2, 0.95, 0.2]} /> {/* Longer legs to reach ground */}
                 </mesh>
                 {/* Shoe */}
-                <mesh position={[0, -0.85, 0.1]} material={shoeMaterial}>
+                <mesh position={[0, -1.0, 0.1]} material={shoeMaterial}>
                     <boxGeometry args={[0.15, 0.1, 0.3]} />
                 </mesh>
             </group>
-            <group position={[0.2, 0.9, 0]} ref={rightLegRef}> {/* 0.2 + 0.7 */}
-                <mesh position={[0, -0.4, 0]} material={legMaterial}>
-                    <boxGeometry args={[0.2, 0.8, 0.2]} />
+            <group position={[0.2, 1.05, 0]} ref={rightLegRef}> {/* Hip at 1.05 */}
+                <mesh position={[0, -0.475, 0]} material={legMaterial}>
+                    <boxGeometry args={[0.2, 0.95, 0.2]} />
                 </mesh>
                 {/* Shoe */}
-                <mesh position={[0, -0.85, 0.1]} material={shoeMaterial}>
+                <mesh position={[0, -1.0, 0.1]} material={shoeMaterial}>
                     <boxGeometry args={[0.15, 0.1, 0.3]} />
                 </mesh>
             </group>

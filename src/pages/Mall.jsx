@@ -22,15 +22,7 @@ export const Mall = () => {
             <header className="flex justify-between items-center mb-8">
                 <h1 className="text-4xl font-display text-brand-deep">The Mall</h1>
                 <div className="flex gap-4 items-center">
-                    <button
-                        onClick={() => {
-                            const { unlockAllItems } = useGameStore.getState()
-                            unlockAllItems(SHOP_ITEMS.map(i => i.id))
-                        }}
-                        className="px-3 py-1 bg-gray-200 text-gray-600 font-mono text-xs rounded hover:bg-gray-300"
-                    >
-                        [DEBUG] Unlock All
-                    </button>
+
                     <div className="font-mono text-xl bg-white px-4 py-2 rounded-lg border-2 border-brand-pink text-brand-purple">
                         FC: {fashionCoins}
                     </div>

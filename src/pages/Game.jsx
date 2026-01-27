@@ -48,7 +48,7 @@ export const Game = ({ params }) => {
 
             {/* 3D Runway Stage */}
             <div className="w-full max-w-4xl h-64">
-                <SceneContainer />
+                <SceneContainer target={[0, 1.5, 0]} cameraPosition={[0, 2.2, 5.5]} />
             </div>
 
             {/* Typing Area */}
