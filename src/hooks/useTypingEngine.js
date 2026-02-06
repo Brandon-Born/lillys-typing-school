@@ -54,7 +54,8 @@ export const useTypingEngine = (targetText) => {
                 setIsCompleted(true)
 
                 // Calculate final WPM
-                const timeInMinutes = (Date.now() - startTime) / 60000
+                const effectiveStartTime = startTime || Date.now()
+                const timeInMinutes = (Date.now() - effectiveStartTime) / 60000
                 const words = targetText.length / 5
                 const finalWpm = Math.round(words / timeInMinutes)
                 setWpm(finalWpm)
@@ -63,8 +64,6 @@ export const useTypingEngine = (targetText) => {
             playTypingSound?.()
         } else {
             // Mistake
-            setMistakes((prev) => prev + 1)
-            setShake(true)
             setMistakes((prev) => prev + 1)
             setShake(true)
             setTimeout(() => setShake(false), 300) // Reset shake after animation

@@ -28,7 +28,7 @@ export const lessons = [
         keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';'],
         content: 'asdf jkl; lad fad dad sad all fall ask flask',
         criteria: { minWpm: 12, maxErrors: 4 },
-        rewards: { coins: 75, unlockId: 'basic-tee' } // Example unlock
+        rewards: { coins: 75, unlockId: 'sparkle-top' }
     },
     {
         id: 'p1-l4',
@@ -70,7 +70,7 @@ export const lessons = [
         keys: ['Shift'],
         content: 'Lilly Dark Sara Karl Paul Red Blue Silk Lake Park',
         criteria: { minWpm: 18, maxErrors: 3 },
-        rewards: { coins: 120, unlockId: 'glitter-skirt' }
+        rewards: { coins: 120, unlockId: 'neon-skirt' }
     },
 
     // --- PHASE 3: The Full Collection (World Tour) ---
@@ -82,7 +82,7 @@ export const lessons = [
         keys: ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.'],
         content: 'van cab ban man can zen mix axe cave name maze',
         criteria: { minWpm: 20, maxErrors: 4 },
-        rewards: { coins: 150, unlockId: 'platform-boots' }
+        rewards: { coins: 150, unlockId: 'boots' }
     },
     {
         id: 'p3-l2',
@@ -92,6 +92,6 @@ export const lessons = [
         keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '$'],
         content: 'Buy 1 get 2; $50 off; Size 8; 100% Silk; 1999 Collection;',
         criteria: { minWpm: 20, maxErrors: 3 },
-        rewards: { coins: 200, unlockId: 'diamond-tiara' }
+        rewards: { coins: 200, unlockId: 'blue-hair' }
     }
 ]

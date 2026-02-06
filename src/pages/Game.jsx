@@ -11,29 +11,50 @@ import { lessons } from '../data/lessons'
 
 export const Game = ({ params }) => {
     const [, setLocation] = useLocation()
-    const { addCoins } = useGameStore()
+    const {
+        addCoins,
+        completedLessons,
+        markLessonCompleted,
+        unlockItem
+    } = useGameStore()
 
     // Find lesson or fallback to first one/debug
     const lesson = lessons.find(l => l.id === params.lessonId)
     const targetText = lesson ? lesson.content : "Error: Lesson not found"
     const rewardCoins = lesson ? lesson.rewards.coins : 5
+    const isLessonCompleted = Boolean(completedLessons[params.lessonId])
+    const minWpm = lesson?.criteria?.minWpm ?? 0
+    const maxErrors = lesson?.criteria?.maxErrors ?? Infinity
 
     const { input, mistakes, wpm, isCompleted, shake, reset } = useTypingEngine(targetText)
     const { playSuccessSound } = useAudioManager()
+    const didPass = isCompleted && wpm >= minWpm && mistakes <= maxErrors
+    const canClaimFullReward = didPass && !isLessonCompleted
+    const replayReward = didPass ? Math.floor(rewardCoins / 4) : 0
 
     React.useEffect(() => {
-        if (isCompleted) {
+        if (didPass) {
             playSuccessSound()
         }
-    }, [isCompleted, playSuccessSound])
+    }, [didPass, playSuccessSound])
 
     const handleComplete = () => {
-        addCoins(rewardCoins)
+        if (!didPass) return
+
+        if (canClaimFullReward) {
+            addCoins(rewardCoins)
+            markLessonCompleted(params.lessonId)
+            if (lesson?.rewards?.unlockId) {
+                unlockItem(lesson.rewards.unlockId)
+            }
+        }
         setLocation('/agency')
     }
 
     const handleReplay = () => {
-        addCoins(Math.floor(rewardCoins / 2))
+        if (replayReward > 0) {
+            addCoins(replayReward)
+        }
         reset()
     }
 
@@ -42,8 +63,8 @@ export const Game = ({ params }) => {
 
             {/* Navigation Back */}
             <div className="w-full max-w-4xl flex justify-start">
-                <Link href="/agency">
-                    <button className="text-brand-deep font-bold hover:underline mb-2">← Back to Agency</button>
+                <Link href="/agency" className="text-brand-deep font-bold hover:underline mb-2">
+                    ← Back to Agency
                 </Link>
             </div>
 
@@ -77,24 +98,52 @@ export const Game = ({ params }) => {
                     </div>
                     <div>
                         <p>Status</p>
-                        <p className="text-xl font-bold text-brand-deep">{isCompleted ? 'SLAYED!' : 'Typing...'}</p>
+                        <p className="text-xl font-bold text-brand-deep">
+                            {isCompleted ? (didPass ? 'SLAYED!' : 'Try Again') : 'Typing...'}
+                        </p>
                     </div>
                 </div>
 
                 {isCompleted && (
-                    <div className="space-x-4">
+                    <div className="space-y-4">
+                        {!didPass && (
+                            <p className="text-sm font-mono text-red-600">
+                                Need {minWpm}+ WPM and {maxErrors} or fewer mistakes.
+                            </p>
+                        )}
+                        {didPass && !canClaimFullReward && (
+                            <p className="text-sm font-mono text-brand-purple">
+                                Lesson already completed. Bonus reward available on replay.
+                            </p>
+                        )}
+                        {didPass && canClaimFullReward && lesson?.rewards?.unlockId && (
+                            <p className="text-sm font-mono text-brand-deep">
+                                Unlock ready: {lesson.rewards.unlockId}
+                            </p>
+                        )}
+                        <div className="space-x-4">
                         <button
                             onClick={handleReplay}
                             className="mt-6 px-6 py-3 bg-brand-pink text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
                         >
-                            Replay Level (+{Math.floor(rewardCoins / 2)} FC)
+                            Replay Level (+{replayReward} FC)
                         </button>
-                        <button
-                            onClick={handleComplete}
-                            className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
-                        >
-                            Complete Gig (+{rewardCoins} FC)
-                        </button>
+                        {didPass ? (
+                            <button
+                                onClick={handleComplete}
+                                className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
+                            >
+                                {canClaimFullReward ? `Complete Gig (+${rewardCoins} FC)` : 'Return to Agency'}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={reset}
+                                className="mt-6 px-6 py-3 bg-brand-deep text-white rounded-full font-display text-lg hover:scale-105 transition shadow-md"
+                            >
+                                Retry Contract
+                            </button>
+                        )}
+                        </div>
                     </div>
                 )}
             </div>

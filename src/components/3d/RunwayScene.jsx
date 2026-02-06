@@ -1,17 +1,17 @@
-import { useTexture, Instance, Instances } from '@react-three/drei'
+import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { RepeatWrapping, Vector3 } from 'three'
 import { Avatar } from './Avatar'
-import React, { useMemo, useRef, useState, useEffect } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 
 // --- Flashbulb Component ---
 const Flashbulb = ({ position }) => {
     const lightRef = useRef()
     const [active, setActive] = useState(false)
     const [color, setColor] = useState('#ffffff')
-    const vec = new THREE.Vector3()
+    const vec = new Vector3()
 
-    useFrame((state) => {
+    useFrame(() => {
         // Check overlap with Avatar (Z ~ 0)
         // Only flash if we are "close" (e.g. Z > -8)
         // We need world position for this check
@@ -72,9 +72,12 @@ const AudienceRow = ({ initialZ, zLimit, resetZ }) => {
     })
 
     // Random flashbulb logic per row
-    const hasFlash = useMemo(() => Math.random() < 0.3, [])
+    const hasFlash = useMemo(() => {
+        const pseudoRandom = Math.abs(Math.sin(initialZ * 12.9898) * 43758.5453) % 1
+        return pseudoRandom < 0.3
+    }, [initialZ])
 
-    useFrame((state, delta) => {
+    useFrame((_, delta) => {
         if (groupRef.current) {
             // Move AWAY from Camera (Z-) to simulate... whatever the user wants (Moonwalk? Walking into distance?)
             groupRef.current.position.z -= delta * 3.75
@@ -119,9 +122,6 @@ const AudienceCrowd = () => {
     const SPAWN_Z = 10
     const DESPAWN_Z = -40
 
-    // Derived
-    const TOTAL_LENGTH = ROW_COUNT * SPACING // 50m
-
     const rows = useMemo(() => {
         return Array.from({ length: ROW_COUNT }).map((_, i) => {
             // Distribute initial Z positions
@@ -149,15 +149,9 @@ export const RunwayScene = () => {
     // Load texture for side runners
     const rawFabric = useTexture('/assets/fabric.png')
 
-    // Animate floor texture
-    useFrame((state, delta) => {
-        // Scroll texture
-        rawFabric.offset.y += delta * 0.375 // Match reduced audience speed
-    })
-
     const fabricMap = useMemo(() => {
         const t = rawFabric.clone()
-        t.wrapS = t.wrapT = THREE.RepeatWrapping
+        t.wrapS = t.wrapT = RepeatWrapping
         t.repeat.set(1, 20)
         t.needsUpdate = true
         return t

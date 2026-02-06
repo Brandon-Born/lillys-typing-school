@@ -42,8 +42,8 @@ export const NailSalon = () => {
             {/* Header */}
             <header className="bg-white p-4 shadow-md flex justify-between items-center z-10">
                 <div className="flex items-center space-x-4">
-                    <Link href="/agency">
-                        <button className="text-brand-deep font-bold hover:underline">← Back to Agency</button>
+                    <Link href="/agency" className="text-brand-deep font-bold hover:underline">
+                        ← Back to Agency
                     </Link>
                     <h1 className="text-2xl font-display text-brand-pink">💅 Glamour Nails</h1>
                 </div>

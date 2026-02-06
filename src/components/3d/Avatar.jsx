@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useTexture, Decal } from '@react-three/drei'
-import * as THREE from 'three'
+import { MeshStandardMaterial, RepeatWrapping, SRGBColorSpace } from 'three'
 import { useGameStore } from '../../store/useGameStore'
 import { getItemById } from '../../data/items'
 
@@ -20,6 +20,7 @@ export const Avatar = () => {
     const bottomItem = getItemById(currentOutfit.bottom) || {}
     const shoeItem = getItemById(currentOutfit.shoes) || {}
     const hairItem = getItemById(currentOutfit.hair) || {}
+    const topColor = topItem.color || '#ffffff'
 
     // Load static textures (Face)
     // TODO: Dynamic textures will be loaded here when assets are ready
@@ -40,21 +41,23 @@ export const Avatar = () => {
     // Configure Textures
     // Top uses Box Mapping (Front Face only)
     // Bottom uses Seamless Texture (All Faces)
-
-    // Set repeat for seamless texturing on Skirt/Pants
-    bottomTexture.wrapS = bottomTexture.wrapT = THREE.RepeatWrapping
-    bottomTexture.repeat.set(1, 1)
+    const bottomMap = useMemo(() => {
+        const map = bottomTexture.clone()
+        map.wrapS = RepeatWrapping
+        map.wrapT = RepeatWrapping
+        map.repeat.set(1, 1)
+        map.needsUpdate = true
+        return map
+    }, [bottomTexture])
 
     // Materials Setup for TOP
-    const materials = useMemo(() => {
-        const matColor = new THREE.MeshStandardMaterial({ color: topItem.color || '#ffffff' })
-        const matTexture = new THREE.MeshStandardMaterial({
-            map: topTexture,
-            color: 'white',
-            transparent: true
-        })
-        return [matColor, matColor, matColor, matColor, matTexture, matColor]
-    }, [topItem.color, topTexture])
+    const matColor = new MeshStandardMaterial({ color: topColor })
+    const matTexture = new MeshStandardMaterial({
+        map: topTexture,
+        color: 'white',
+        transparent: true
+    })
+    const materials = [matColor, matColor, matColor, matColor, matTexture, matColor]
 
     // Helper: Determine if bottom is skirt or pants
     const isSkirt = bottomItem.id?.includes('skirt')
@@ -63,24 +66,24 @@ export const Avatar = () => {
     // Materials Setup for BOTTOMS
     const legMaterial = useMemo(() => {
         if (isSkirt) {
-            return new THREE.MeshStandardMaterial({ color: skinColor })
+            return new MeshStandardMaterial({ color: skinColor })
         }
-        return new THREE.MeshStandardMaterial({
-            map: bottomTexture,
+        return new MeshStandardMaterial({
+            map: bottomMap,
             color: 'white'
         })
-    }, [isSkirt, skinColor, bottomTexture])
+    }, [isSkirt, skinColor, bottomMap])
 
     const skirtMaterial = useMemo(() => {
-        return new THREE.MeshStandardMaterial({
-            map: bottomTexture,
+        return new MeshStandardMaterial({
+            map: bottomMap,
             color: 'white'
         })
-    }, [bottomTexture])
+    }, [bottomMap])
 
     // Materials Setup for SHOES
     const shoeMaterial = useMemo(() => {
-        return new THREE.MeshStandardMaterial({
+        return new MeshStandardMaterial({
             map: shoeTexture,
             color: 'white' // Tint with white
         })
@@ -88,7 +91,7 @@ export const Avatar = () => {
 
     const faceMap = useMemo(() => {
         const face = rawFace.clone()
-        face.colorSpace = THREE.SRGBColorSpace
+        face.colorSpace = SRGBColorSpace
         face.needsUpdate = true
         return face
     }, [rawFace])
@@ -192,4 +195,3 @@ export const Avatar = () => {
         </group>
     )
 }
-

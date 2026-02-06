@@ -32,6 +32,78 @@ const FINGER_MAP = {
     'r-thumb': [' ']
 }
 
+const FINGER_OFFSETS = {
+    'l-pinky': { x: -55 - 5, y: -10 - 55 },
+    'l-ring': { x: -26 - 2, y: -35 - 58 },
+    'l-middle': { x: 8 + 0, y: -38 - 60 },
+    'l-index': { x: 42 + 2, y: -22 - 58 },
+    'l-thumb': { x: 80 - 10, y: 30 - 45 },
+    'r-index': { x: -42 - 2, y: -22 - 58 },
+    'r-middle': { x: -8 + 0, y: -38 - 60 },
+    'r-ring': { x: 26 + 2, y: -35 - 58 },
+    'r-pinky': { x: 55 + 5, y: -10 - 55 },
+    'r-thumb': { x: -80 + 10, y: 30 - 45 }
+}
+
+const Key = ({ label, x, y, w = 40, h = 40, currentKey, displayKey }) => {
+    const isMatch = (displayKey === 'Space' && label === 'Space') || (label.toLowerCase() === currentKey)
+
+    return (
+        <g transform={`translate(${x}, ${y})`}>
+            <rect
+                width={w} height={h} rx="4"
+                fill={isMatch ? '#ffeb3b' : '#f0f0f0'}
+                stroke="#cccccc" strokeWidth="2"
+                className="transition-colors duration-100"
+            />
+            <text
+                x={w / 2} y={h / 2 + 5}
+                textAnchor="middle"
+                fontSize="14"
+                fontFamily="monospace"
+                fill={isMatch ? '#000000' : '#444444'}
+                fontWeight={isMatch ? 'bold' : 'normal'}
+            >
+                {label}
+            </text>
+        </g>
+    )
+}
+
+const Finger = ({ name, x, y, rotation, scale = 1, isThumb = false, activeFinger, skinColor, color }) => {
+    const isActive = name === activeFinger
+
+    return (
+        <g transform={`translate(${x}, ${y}) rotate(${rotation}) scale(${scale})`} className="transition-all duration-100">
+            <path
+                d={isThumb
+                    ? "M -14 -10 Q -14 -40 -10 -55 Q 0 -65 10 -55 Q 14 -40 14 -10 Q 14 10 0 10 Q -14 10 -14 -10 Z"
+                    : "M -11 0 Q -11 -40 -10 -60 Q 0 -68 10 -60 Q 11 -40 11 0 Q 11 10 0 10 Q -11 10 -11 0 Z"
+                }
+                fill={isActive ? '#ffddbb' : skinColor}
+                stroke={isActive ? '#ff00ff' : '#dcbba5'}
+                strokeWidth={isActive ? 3 : 1}
+            />
+
+            {!isThumb && (
+                <path
+                    d="M -7 -45 Q 0 -58 7 -45 Q 7 -35 6 -30 Q 0 -25 -6 -30 Q -7 -35 -7 -45 Z"
+                    fill={color}
+                    fillOpacity="0.8"
+                />
+            )}
+
+            {isThumb && (
+                <path
+                    d="M -8 -40 Q 0 -52 8 -40 Q 8 -30 7 -25 Q 0 -20 -7 -25 Q -8 -30 -8 -40 Z"
+                    fill={color}
+                    fillOpacity="0.8"
+                />
+            )}
+        </g>
+    )
+}
+
 export const KeyboardHands = ({ activeKey, nailColorId }) => {
     const nailItem = getItemById(nailColorId)
     const color = nailItem ? nailItem.color : '#ffccdd'
@@ -96,22 +168,6 @@ export const KeyboardHands = ({ activeKey, nailColorId }) => {
 
     const activeFinger = getActiveFinger(activeKey)
 
-    // Finger Tips relative to Hand Group Center (0,0)
-    // Based on the <Finger> x,y props in the render method + approx length to tip
-    const FINGER_OFFSETS = {
-        'l-pinky': { x: -55 - 5, y: -10 - 55 },
-        'l-ring': { x: -26 - 2, y: -35 - 58 },
-        'l-middle': { x: 8 + 0, y: -38 - 60 },
-        'l-index': { x: 42 + 2, y: -22 - 58 },
-        'l-thumb': { x: 80 - 10, y: 30 - 45 },
-
-        'r-index': { x: -42 - 2, y: -22 - 58 },
-        'r-middle': { x: -8 + 0, y: -38 - 60 },
-        'r-ring': { x: 26 + 2, y: -35 - 58 },
-        'r-pinky': { x: 55 + 5, y: -10 - 55 },
-        'r-thumb': { x: -80 + 10, y: 30 - 45 }
-    }
-
     // Calculate Home Positions based on F and J keys
     const homePositions = useMemo(() => {
         const fCoords = getKeyCoordinates('f') || { x: 200, y: 150 }
@@ -175,33 +231,6 @@ export const KeyboardHands = ({ activeKey, nailColorId }) => {
         return { left: lPos, right: rPos }
     }, [activeKey, LEFT_HOME_POS, RIGHT_HOME_POS])
 
-    // Helper: Key Rendering
-    const Key = ({ label, x, y, w = 40, h = 40 }) => {
-        const isMatch = (displayKey === 'Space' && label === 'Space') ||
-            (label.toLowerCase() === currentKey)
-
-        return (
-            <g transform={`translate(${x}, ${y})`}>
-                <rect
-                    width={w} height={h} rx="4"
-                    fill={isMatch ? '#ffeb3b' : '#f0f0f0'}
-                    stroke="#cccccc" strokeWidth="2"
-                    className="transition-colors duration-100"
-                />
-                <text
-                    x={w / 2} y={h / 2 + 5}
-                    textAnchor="middle"
-                    fontSize="14"
-                    fontFamily="monospace"
-                    fill={isMatch ? '#000000' : '#444444'}
-                    fontWeight={isMatch ? 'bold' : 'normal'}
-                >
-                    {label}
-                </text>
-            </g>
-        )
-    }
-
     // Generate Key Layout Positions
     const renderKeyboard = () => {
         const startX = 50
@@ -212,57 +241,29 @@ export const KeyboardHands = ({ activeKey, nailColorId }) => {
 
         return KEYS.map((row, rowIndex) => {
             let currentX = startX + (rowIndex * 15) // Indent rows slightly
-            const rowElements = row.map((keyLabel) => {
+            const rowElements = row.map((keyLabel, keyIndex) => {
                 let w = keySize
                 // Special widths
                 if (['Backspace', 'Tab', 'Caps', 'Enter', 'Shift'].includes(keyLabel)) w = keySize * 1.5
                 if (keyLabel === 'Space') w = keySize * 6
 
-                const k = <Key key={keyLabel} label={keyLabel} x={currentX} y={currentY} w={w} />
+                const k = (
+                    <Key
+                        key={`${keyLabel}-${keyIndex}`}
+                        label={keyLabel}
+                        x={currentX}
+                        y={currentY}
+                        w={w}
+                        currentKey={currentKey}
+                        displayKey={displayKey}
+                    />
+                )
                 currentX += w + gap
                 return k
             })
             currentY += keySize + gap
             return <g key={rowIndex}>{rowElements}</g>
         })
-    }
-
-    // Finger Component
-    const Finger = ({ name, x, y, rotation, scale = 1, isThumb = false }) => {
-        const isActive = name === activeFinger
-
-        return (
-            <g transform={`translate(${x}, ${y}) rotate(${rotation}) scale(${scale})`} className="transition-all duration-100">
-                {/* Finger Base */}
-                <path
-                    d={isThumb
-                        ? "M -14 -10 Q -14 -40 -10 -55 Q 0 -65 10 -55 Q 14 -40 14 -10 Q 14 10 0 10 Q -14 10 -14 -10 Z"
-                        : "M -11 0 Q -11 -40 -10 -60 Q 0 -68 10 -60 Q 11 -40 11 0 Q 11 10 0 10 Q -11 10 -11 0 Z"
-                    }
-                    fill={isActive ? '#ffddbb' : skinColor}
-                    stroke={isActive ? '#ff00ff' : '#dcbba5'}
-                    strokeWidth={isActive ? 3 : 1}
-                />
-
-                {/* Nail */}
-                {!isThumb && (
-                    <path
-                        d="M -7 -45 Q 0 -58 7 -45 Q 7 -35 6 -30 Q 0 -25 -6 -30 Q -7 -35 -7 -45 Z"
-                        fill={color}
-                        fillOpacity="0.8"
-                    />
-                )}
-
-                {/* Thumb Nail */}
-                {isThumb && (
-                    <path
-                        d="M -8 -40 Q 0 -52 8 -40 Q 8 -30 7 -25 Q 0 -20 -7 -25 Q -8 -30 -8 -40 Z"
-                        fill={color}
-                        fillOpacity="0.8"
-                    />
-                )}
-            </g>
-        )
     }
 
     return (
@@ -284,11 +285,11 @@ export const KeyboardHands = ({ activeKey, nailColorId }) => {
                         fill={skinColor}
                     />
 
-                    <Finger name="l-pinky" x="-55" y="-10" rotation="-15" scale="0.85" />
-                    <Finger name="l-ring" x="-26" y="-35" rotation="-5" scale="0.95" />
-                    <Finger name="l-middle" x="8" y="-38" rotation="2" scale="1.0" />
-                    <Finger name="l-index" x="42" y="-22" rotation="10" scale="0.95" />
-                    <Finger name="thumb" x="80" y="30" rotation="45" scale="0.85" isThumb />
+                    <Finger name="l-pinky" x="-55" y="-10" rotation="-15" scale="0.85" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="l-ring" x="-26" y="-35" rotation="-5" scale="0.95" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="l-middle" x="8" y="-38" rotation="2" scale="1.0" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="l-index" x="42" y="-22" rotation="10" scale="0.95" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="thumb" x="80" y="30" rotation="45" scale="0.85" isThumb activeFinger={activeFinger} skinColor={skinColor} color={color} />
                 </g>
 
                 {/* Right Hand Layer (Hovering over J-K-L-;) */}
@@ -303,11 +304,11 @@ export const KeyboardHands = ({ activeKey, nailColorId }) => {
                         fill={skinColor}
                     />
 
-                    <Finger name="thumb" x="-80" y="30" rotation="-45" scale="0.85" isThumb />
-                    <Finger name="r-index" x="-42" y="-22" rotation="-10" scale="0.95" />
-                    <Finger name="r-middle" x="-8" y="-38" rotation="-2" scale="1.0" />
-                    <Finger name="r-ring" x="26" y="-35" rotation="5" scale="0.95" />
-                    <Finger name="r-pinky" x="55" y="-10" rotation="15" scale="0.85" />
+                    <Finger name="thumb" x="-80" y="30" rotation="-45" scale="0.85" isThumb activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="r-index" x="-42" y="-22" rotation="-10" scale="0.95" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="r-middle" x="-8" y="-38" rotation="-2" scale="1.0" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="r-ring" x="26" y="-35" rotation="5" scale="0.95" activeFinger={activeFinger} skinColor={skinColor} color={color} />
+                    <Finger name="r-pinky" x="55" y="-10" rotation="15" scale="0.85" activeFinger={activeFinger} skinColor={skinColor} color={color} />
                 </g>
             </svg>
         </div>

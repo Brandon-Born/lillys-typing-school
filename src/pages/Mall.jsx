@@ -15,8 +15,8 @@ export const Mall = () => {
 
     return (
         <div className="min-h-screen bg-brand-light p-8">
-            <Link href="/agency">
-                <button className="text-brand-deep font-bold hover:underline mb-8">← Back to Agency</button>
+            <Link href="/agency" className="inline-block text-brand-deep font-bold hover:underline mb-8">
+                ← Back to Agency
             </Link>
 
             <header className="flex justify-between items-center mb-8">
