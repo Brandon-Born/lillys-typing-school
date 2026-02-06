@@ -4,6 +4,7 @@ import { useGameStore } from '../store/useGameStore'
 import { useTypingEngine } from '../hooks/useTypingEngine'
 import { useAudioManager } from '../hooks/useAudioManager'
 import { TypingDisplay } from '../components/TypingDisplay'
+import { KeyboardHands } from '../components/KeyboardHands'
 import { SceneContainer } from '../components/3d/SceneContainer'
 
 import { lessons } from '../data/lessons'
@@ -56,6 +57,14 @@ export const Game = ({ params }) => {
                 <h2 className="text-2xl font-display text-brand-deep">{lesson?.title || "Runway Rehearsal"}</h2>
 
                 <TypingDisplay targetText={targetText} input={input} shake={shake} />
+
+                {/* Keyboard Hands Overlay */}
+                <div className="mt-4 flex justify-center">
+                    <KeyboardHands
+                        activeKey={!isCompleted ? targetText[input.length] : null}
+                        nailColorId={useGameStore.getState().currentOutfit.nails}
+                    />
+                </div>
 
                 <div className="grid grid-cols-3 gap-4 text-center font-mono text-sm text-gray-500 mt-8">
                     <div>

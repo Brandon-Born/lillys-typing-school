@@ -18,7 +18,7 @@ export const Agency = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
 
-                {/* Job Board */}
+                {/* Job Board - Takes up vertical space */}
                 <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-brand-purple row-span-2">
                     <h2 className="text-2xl font-display text-brand-deep mb-4">Job Board</h2>
                     <p className="mb-4 font-sans text-sm text-gray-600">Select a contract to walk via keyboard.</p>
@@ -42,13 +42,24 @@ export const Agency = () => {
                     </div>
                 </div>
 
-                {/* Wardrobe */}
+                {/* Dressing Room */}
                 <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-brand-pink">
                     <h2 className="text-2xl font-display text-brand-deep mb-4">Dressing Room</h2>
                     <p className="mb-6 font-sans">Change your look and slay.</p>
                     <Link href="/dressing-room">
                         <button className="w-full py-3 bg-brand-purple text-white font-bold rounded-lg hover:bg-brand-deep transition">
                             Customize Avatar
+                        </button>
+                    </Link>
+                </div>
+
+                {/* Nail Salon */}
+                <div className="bg-white p-6 rounded-xl shadow-lg border-2 border-brand-pink bg-pink-50">
+                    <h2 className="text-2xl font-display text-brand-pink mb-4">💅 Glamour Nails</h2>
+                    <p className="mb-6 font-sans">Get that fresh manicure.</p>
+                    <Link href="/nail-salon">
+                        <button className="w-full py-3 bg-brand-pink text-white font-bold rounded-lg hover:bg-brand-purple transition">
+                            Visit Salon
                         </button>
                     </Link>
                 </div>

@@ -17,6 +17,13 @@ export const ALL_ITEMS = [
     // Hair
     { id: 'default-hair', name: 'Messy Bun', category: 'hair', price: 0, color: '#884400', description: 'Simple and practical.' },
     { id: 'blue-hair', name: 'Blue Bob', category: 'hair', price: 150, color: '#00ffff', description: 'A bold look.' },
+
+    // Nails
+    { id: 'default-nails', name: 'Natural Pink', category: 'nails', price: 0, color: '#ffccdd', description: 'Clean and natural.' },
+    { id: 'red-nails', name: 'Classic Red', category: 'nails', price: 40, color: '#ff0000', description: 'Bold and confident.' },
+    { id: 'blue-nails', name: 'Cool Blue', category: 'nails', price: 50, color: '#0088ff', description: 'Icy cool.' },
+    { id: 'gold-nails', name: 'Gold Sparkle', category: 'nails', price: 100, color: '#ffd700', description: 'So shiny!' },
+    { id: 'black-nails', name: 'Rock Black', category: 'nails', price: 60, color: '#222222', description: 'Edgy.' },
 ]
 
 export const SHOP_ITEMS = ALL_ITEMS.filter(item => item.price > 0)

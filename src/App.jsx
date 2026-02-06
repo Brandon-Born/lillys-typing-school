@@ -5,6 +5,7 @@ import { Agency } from './pages/Agency'
 import { Game } from './pages/Game'
 import { Mall } from './pages/Mall'
 import { DressingRoom } from './pages/DressingRoom'
+import { NailSalon } from './pages/NailSalon'
 import './index.css'
 
 import { AudioProvider } from './hooks/useAudioManager'
@@ -18,6 +19,7 @@ function App() {
         <Route path="/game/:lessonId" component={Game} />
         <Route path="/mall" component={Mall} />
         <Route path="/dressing-room" component={DressingRoom} />
+        <Route path="/nail-salon" component={NailSalon} />
 
         {/* 404 Fallback */}
         <Route>

@@ -10,12 +10,13 @@ export const useGameStore = create(
             fans: 0,
 
             // Inventory
-            unlockedItems: ['basic-tee', 'jeans', 'sneakers'], // Starting items
+            unlockedItems: ['basic-tee', 'jeans', 'sneakers', 'default-nails'], // Starting items
             currentOutfit: {
                 top: 'basic-tee',
                 bottom: 'jeans',
                 shoes: 'sneakers',
-                hair: 'default-hair'
+                hair: 'default-hair',
+                nails: 'default-nails'
             },
 
             // Actions
